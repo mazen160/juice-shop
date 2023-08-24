@@ -1,0 +1,189 @@
+                    
+                    
+┌──────────────────┐
+│ 18 Code Findings │
+└──────────────────┘
+                                                                
+  [36m[22m[24m  data/static/codefixes/dbSchemaChallenge_1.ts [0m
+       [1m[24mjavascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection[0m
+          Detected a sequelize statement that is tainted by user-input. This could lead to SQL              
+          injection if the variable is user-controlled and is not properly sanitized. In order to           
+          prevent SQL injection, it is recommended to use parameterized queries or prepared                 
+          statements.                                                                                       
+          Details: https://sg.run/gjoe                                                                      
+                                                                                                            
+            5┆  ... [1m[24m"SELECT * FROM Products WHERE ((name LIKE '%"+criteria+"%' OR description LIKE               
+  '%"+criteria+"%') AND deletedAt IS NULL) ORDER BY name"[0m) ... [0m                                                   
+            [shortened a long line from output, adjust with --max-chars-per-line]
+                                                                
+  [36m[22m[24m  data/static/codefixes/dbSchemaChallenge_3.ts [0m
+       [1m[24mjavascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection[0m
+          Detected a sequelize statement that is tainted by user-input. This could lead to SQL              
+          injection if the variable is user-controlled and is not properly sanitized. In order to           
+          prevent SQL injection, it is recommended to use parameterized queries or prepared                 
+          statements.                                                                                       
+          Details: https://sg.run/gjoe                                                                      
+                                                                                                            
+           11┆  ... [1m[24m`SELECT * FROM Products WHERE ((name LIKE '%${criteria}%' OR description LIKE                
+  '%${criteria}%') AND deletedAt IS NULL) ORDER BY name[0m`) ... [0m                                                    
+            [shortened a long line from output, adjust with --max-chars-per-line]
+                                                                         
+  [36m[22m[24m  data/static/codefixes/unionSqlInjectionChallenge_1.ts [0m
+       [1m[24mjavascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection[0m
+          Detected a sequelize statement that is tainted by user-input. This could lead to SQL              
+          injection if the variable is user-controlled and is not properly sanitized. In order to           
+          prevent SQL injection, it is recommended to use parameterized queries or prepared                 
+          statements.                                                                                       
+          Details: https://sg.run/gjoe                                                                      
+                                                                                                            
+            6┆  ... [1m[24m`SELECT * FROM Products WHERE ((name LIKE '%${criteria}%' OR description LIKE                
+  '%${criteria}%') AND deletedAt IS NULL) ORDER BY name[0m`) ... [0m                                                    
+            [shortened a long line from output, adjust with --max-chars-per-line]
+                                                                         
+  [36m[22m[24m  data/static/codefixes/unionSqlInjectionChallenge_3.ts [0m
+       [1m[24mjavascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection[0m
+          Detected a sequelize statement that is tainted by user-input. This could lead to SQL              
+          injection if the variable is user-controlled and is not properly sanitized. In order to           
+          prevent SQL injection, it is recommended to use parameterized queries or prepared                 
+          statements.                                                                                       
+          Details: https://sg.run/gjoe                                                                      
+                                                                                                            
+           10┆  ... [1m[24m`SELECT * FROM Products WHERE ((name LIKE '%${criteria}%' OR description LIKE                
+  '%${criteria}%') AND deletedAt IS NULL) ORDER BY name[0m`) ... [0m                                                    
+            [shortened a long line from output, adjust with --max-chars-per-line]
+                                     
+  [36m[22m[24m  lib/insecurity.ts [0m
+       [1m[24mjavascript.jsonwebtoken.security.jwt-hardcode.hardcoded-jwt-secret[0m                  
+          A hard-coded credential was detected. It is not recommended to store credentials in source-
+          code, as this risks secrets being leaked and used by either an internal or external        
+          malicious adversary. It is recommended to use environment variables to securely provide    
+          credentials or retrieve credentials from a secure vault or HSM (Hardware Security Module). 
+          Details: https://sg.run/4xN9                                                               
+                                                                                                     
+           56┆ export const authorize = (user = {}) => jwt.sign(user, [1m[24mprivateKey[0m, { expiresIn: '6h',          
+  algorithm: 'RS256' })                                                                                                 
+                                         
+  [36m[22m[24m  routes/dataErasure.ts [0m
+       [1m[24mjavascript.express.security.audit.express-path-join-resolve-traversal.express-path-join-resolve-
+       traversal[0m                                                                                           
+          Possible writing outside of the destination, make sure that the target path is nested in the        
+          intended destination                                                                                
+          Details: https://sg.run/weRn                                                                        
+                                                                                                              
+           69┆ const filePath: string = path.resolve([1m[24mreq.body.layout[0m).toLowerCase()
+                                        
+  [36m[22m[24m  routes/fileServer.ts [0m
+       [1m[24mjavascript.express.security.audit.express-res-sendfile.express-res-sendfile[0m        
+          The application processes user-input, this is passed to res.sendFile which can allow an   
+          attacker to arbitrarily read files on the system through path traversal. It is recommended
+          to perform input validation in addition to canonicalizing the path. This allows you to    
+          validate the path against the intended directory it should be accessing.                  
+          Details: https://sg.run/7DJk                                                              
+                                                                                                    
+           33┆ res.sendFile([1m[24mpath.resolve('ftp/', file)[0m)
+                                       
+  [36m[22m[24m  routes/keyServer.ts [0m
+       [1m[24mjavascript.express.security.audit.express-path-join-resolve-traversal.express-path-join-resolve-
+       traversal[0m                                                                                           
+          Possible writing outside of the destination, make sure that the target path is nested in the        
+          intended destination                                                                                
+          Details: https://sg.run/weRn                                                                        
+                                                                                                              
+           14┆ res.sendFile(path.resolve('encryptionkeys/', [1m[24mfile[0m))
+            ⋮┆----------------------------------------
+       [1m[24mjavascript.express.security.audit.express-res-sendfile.express-res-sendfile[0m        
+          The application processes user-input, this is passed to res.sendFile which can allow an   
+          attacker to arbitrarily read files on the system through path traversal. It is recommended
+          to perform input validation in addition to canonicalizing the path. This allows you to    
+          validate the path against the intended directory it should be accessing.                  
+          Details: https://sg.run/7DJk                                                              
+                                                                                                    
+           14┆ res.sendFile([1m[24mpath.resolve('encryptionkeys/', file)[0m)
+                                           
+  [36m[22m[24m  routes/logfileServer.ts [0m
+       [1m[24mjavascript.express.security.audit.express-path-join-resolve-traversal.express-path-join-resolve-
+       traversal[0m                                                                                           
+          Possible writing outside of the destination, make sure that the target path is nested in the        
+          intended destination                                                                                
+          Details: https://sg.run/weRn                                                                        
+                                                                                                              
+           14┆ res.sendFile(path.resolve('logs/', [1m[24mfile[0m))
+            ⋮┆----------------------------------------
+       [1m[24mjavascript.express.security.audit.express-res-sendfile.express-res-sendfile[0m        
+          The application processes user-input, this is passed to res.sendFile which can allow an   
+          attacker to arbitrarily read files on the system through path traversal. It is recommended
+          to perform input validation in addition to canonicalizing the path. This allows you to    
+          validate the path against the intended directory it should be accessing.                  
+          Details: https://sg.run/7DJk                                                              
+                                                                                                    
+           14┆ res.sendFile([1m[24mpath.resolve('logs/', file)[0m)
+                                   
+  [36m[22m[24m  routes/login.ts [0m
+       [1m[24mjavascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection[0m
+          Detected a sequelize statement that is tainted by user-input. This could lead to SQL              
+          injection if the variable is user-controlled and is not properly sanitized. In order to           
+          prevent SQL injection, it is recommended to use parameterized queries or prepared                 
+          statements.                                                                                       
+          Details: https://sg.run/gjoe                                                                      
+                                                                                                            
+           36┆  ... [1m[24m`SELECT * FROM Users WHERE email = '${req.body.email || ''}' AND password =                  
+  '${security.hash(req.body.password || '')}' AND deletedAt IS NULL[0m`, { m ... [0m                                    
+            [shortened a long line from output, adjust with --max-chars-per-line]
+                                                   
+  [36m[22m[24m  routes/profileImageUrlUpload.ts [0m
+       [1m[24mjavascript.express.security.audit.express-ssrf.express-ssrf[0m                          
+          The following request request.get() was found to be crafted from user-input `req` which can 
+          lead to Server-Side Request Forgery (SSRF) vulnerabilities. It is recommended where possible
+          to not allow user-input to craft the base request, but to be treated as part of the path or 
+          query parameter. When user-input is necessary to craft the request, it is recommeneded to   
+          follow OWASP best practices to prevent abuse.                                               
+          Details: https://sg.run/0PNw                                                                
+                                                                                                      
+           23┆ .get([1m[24murl[0m)
+                                              
+  [36m[22m[24m  routes/quarantineServer.ts [0m
+       [1m[24mjavascript.express.security.audit.express-path-join-resolve-traversal.express-path-join-resolve-
+       traversal[0m                                                                                           
+          Possible writing outside of the destination, make sure that the target path is nested in the        
+          intended destination                                                                                
+          Details: https://sg.run/weRn                                                                        
+                                                                                                              
+           14┆ res.sendFile(path.resolve('ftp/quarantine/', [1m[24mfile[0m))
+            ⋮┆----------------------------------------
+       [1m[24mjavascript.express.security.audit.express-res-sendfile.express-res-sendfile[0m        
+          The application processes user-input, this is passed to res.sendFile which can allow an   
+          attacker to arbitrarily read files on the system through path traversal. It is recommended
+          to perform input validation in addition to canonicalizing the path. This allows you to    
+          validate the path against the intended directory it should be accessing.                  
+          Details: https://sg.run/7DJk                                                              
+                                                                                                    
+           14┆ res.sendFile([1m[24mpath.resolve('ftp/quarantine/', file)[0m)
+                                      
+  [36m[22m[24m  routes/redirect.ts [0m
+       [1m[24mjavascript.express.security.audit.express-open-redirect.express-open-redirect[0m        
+          The application redirects to a URL specified by user-supplied input `query` that is not     
+          validated. This could redirect users to malicious locations. Consider using an allow-list   
+          approach to validate URLs, or warn users they are being redirected to a third-party website.
+          Details: https://sg.run/EpoP                                                                
+                                                                                                      
+           19┆ res.redirect([1m[24mtoUrl[0m as string)
+                                    
+  [36m[22m[24m  routes/search.ts [0m
+       [1m[24mjavascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection[0m
+          Detected a sequelize statement that is tainted by user-input. This could lead to SQL              
+          injection if the variable is user-controlled and is not properly sanitized. In order to           
+          prevent SQL injection, it is recommended to use parameterized queries or prepared                 
+          statements.                                                                                       
+          Details: https://sg.run/gjoe                                                                      
+                                                                                                            
+           23┆  ... [1m[24m`SELECT * FROM Products WHERE ((name LIKE '%${criteria}%' OR description LIKE                
+  '%${criteria}%') AND deletedAt IS NULL) ORDER BY name[0m`) // vuln-code- ... [0m                                      
+            [shortened a long line from output, adjust with --max-chars-per-line]
+                                         
+  [36m[22m[24m  routes/userProfile.ts [0m
+       [1m[24mjavascript.express.security.express-insecure-template-usage.express-insecure-template-usage[0m
+          User data from `req` is being compiled into the template, which can lead to a Server Side         
+          Template Injection (SSTI) vulnerability.                                                          
+          Details: https://sg.run/b49v                                                                      
+                                                                                                            
+           56┆ const fn = [1m[24mpug.compile(template)[0m
